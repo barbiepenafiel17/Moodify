@@ -33,6 +33,7 @@
   border: 1px solid #e5e5e5;
   overflow: hidden;
   transition: box-shadow 0.2s;
+  position: relative;
 }
 
 .playlist-card:hover {
@@ -93,4 +94,44 @@
 .spotify-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.5);
+}
+
+/* Authentication styles */
+.favorite-item {
+  transition: background-color 0.2s;
+}
+
+.favorite-item:hover {
+  background-color: #f8f8f8;
+}
+
+/* Google Sign-in button styling */
+#google-signin-container {
+  display: flex;
+  align-items: center;
+}
+
+/* User profile styles */
+#user-profile img {
+  border: 2px solid #e5e5e5;
+}
+
+/* Favorites section */
+#favorites-section {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Heart button styles */
+.playlist-card .absolute button {
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.playlist-card .absolute button:hover {
+  transform: scale(1.1);
 }

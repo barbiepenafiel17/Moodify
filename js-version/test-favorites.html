@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Favorites - Moodify</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/config.js"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">
+    <div class="min-h-screen bg-black bg-opacity-20 p-8">
+        <div class="max-w-2xl mx-auto">
+            <h1 class="text-4xl font-bold text-white mb-8">Favorites Test</h1>
+            
+            <!-- Test buttons -->
+            <div class="bg-white rounded-lg p-6 mb-8">
+                <h2 class="text-xl font-bold mb-4">Test Local Favorites</h2>
+                <button id="add-test-playlist" class="bg-blue-500 text-white px-4 py-2 rounded mr-4">
+                    Add Test Playlist
+                </button>
+                <button id="clear-favorites" class="bg-red-500 text-white px-4 py-2 rounded">
+                    Clear All Favorites
+                </button>
+            </div>
+
+            <!-- Favorites Section -->
+            <div id="favorites-section" class="bg-white rounded-lg p-6 hidden">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold">Your Favorites</h3>
+                    <span class="text-sm text-neutral-600">Guest Mode</span>
+                </div>
+                <div id="favorites-list" class="space-y-3 hidden"></div>
+                <div id="no-favorites" class="text-center py-8 text-neutral-500">
+                    <p>No favorites yet!</p>
+                    <p class="text-sm">Heart a playlist to save it here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // Initialize auth service
+        const authService = new AuthService();
+        
+        // Test playlist data
+        const testPlaylist = {
+            id: 'test123',
+            name: 'Test Chill Vibes',
+            owner: 'Test User',
+            image: 'https://i.scdn.co/image/ab67706f00000003ca5a7517156021292e5663a6'
+        };
+
+        // Add event listeners
+        document.getElementById('add-test-playlist').addEventListener('click', () => {
+            const success = authService.addToFavorites(testPlaylist);
+            if (success) {
+                alert('Added to favorites!');
+            } else {
+                alert('Already in favorites!');
+            }
+        });
+
+        document.getElementById('clear-favorites').addEventListener('click', () => {
+            if (confirm('Clear all favorites?')) {
+                localStorage.removeItem('moodify_favorites');
+                authService.favorites = authService.loadFavorites();
+                authService.updateLocalFavoritesDisplay();
+                alert('Favorites cleared!');
+            }
+        });
+
+        // Show current config status
+        console.log('Google configured:', window.isGoogleConfigured);
+        console.log('Config:', CONFIG);
+    </script>
+</body>
+</html>

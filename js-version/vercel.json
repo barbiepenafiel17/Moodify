@@ -1,9 +1,7 @@
 {
-  "functions": {
-    "js/*.js": {
-      "maxDuration": 10
-    }
-  },
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "installCommand": "",
   "headers": [
     {
       "source": "/js/(.*)",

@@ -165,13 +165,22 @@ class MoodifyApp {
 
   createPlaylistCard(playlist) {
     const fallbackImage = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgdmlld0JveD0iMCAwIDMyMCAzMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMjAiIGhlaWdodD0iMzIwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xMjAgMTIwSDE2MFYxNjBIMTIwVjEyMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHBhdGggZD0iTTE2MCAxNjBIMjAwVjIwMEgxNjBWMTYwWiIgZmlsbD0iIzlDQTNBRiIvPgo8cGF0aCBkPSJNMTIwIDIwMEgxNjBWMjQwSDEyMFYyMDBaIiBmaWxsPSIjOUNBM0FGIi8+Cjwvc3ZnPgo=';
+    const isInFavorites = window.authService && window.authService.isInFavorites(playlist.id);
+    const heartIcon = isInFavorites ? '❤️' : '🤍';
     
     return `
       <div class="playlist-card">
-        <img src="${playlist.image || fallbackImage}" 
-             alt="${playlist.name}" 
-             class="playlist-image" 
-             onerror="this.src='${fallbackImage}'">
+        <div class="relative">
+          <img src="${playlist.image || fallbackImage}" 
+               alt="${playlist.name}" 
+               class="playlist-image" 
+               onerror="this.src='${fallbackImage}'">
+          <button onclick="toggleFavorite('${playlist.id}', this)" 
+                  data-playlist='${JSON.stringify(playlist).replace(/'/g, "&apos;")}'
+                  class="absolute top-2 right-2 bg-white bg-opacity-80 rounded-full p-2 hover:bg-opacity-100 transition-all">
+            <span class="text-lg">${heartIcon}</span>
+          </button>
+        </div>
         <div class="playlist-info">
           <h3 class="playlist-title">${playlist.name}</h3>
           <p class="playlist-description">${playlist.description || "No description available"}</p>
@@ -231,3 +240,29 @@ class MoodifyApp {
 document.addEventListener("DOMContentLoaded", () => {
   window.moodifyApp = new MoodifyApp();
 });
+
+// Global function to toggle favorites
+window.toggleFavorite = function(playlistId, buttonElement) {
+  if (!window.authService || !window.authService.user) {
+    alert('Please sign in to save favorites!');
+    return;
+  }
+
+  try {
+    const playlistData = JSON.parse(buttonElement.getAttribute('data-playlist'));
+    const heartSpan = buttonElement.querySelector('span');
+    
+    if (window.authService.isInFavorites(playlistId)) {
+      // Remove from favorites
+      window.authService.removeFromFavorites(playlistId);
+      heartSpan.textContent = '🤍';
+    } else {
+      // Add to favorites
+      if (window.authService.addToFavorites(playlistData)) {
+        heartSpan.textContent = '❤️';
+      }
+    }
+  } catch (error) {
+    console.error('Error toggling favorite:', error);
+  }
+};

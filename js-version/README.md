@@ -11,6 +11,9 @@ A beautiful client-side web application that helps you discover Spotify playlist
 - 📱 Fully responsive design
 - 🔄 Rate limiting and error handling
 - 🚀 Ready for deployment on Vercel, Netlify, or any static hosting
+- 🔐 **Google Sign-In integration**
+- ❤️ **Save and manage favorite playlists**
+- 👤 **User profile and session management**
 
 ## 🚀 Quick Deploy
 
@@ -95,12 +98,23 @@ A beautiful client-side web application that helps you discover Spotify playlist
 2. Create a new app
 3. Copy your Client ID and Client Secret
 
+### Google OAuth Credentials
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project
+3. Enable Google Identity API
+4. Create OAuth 2.0 credentials
+5. Copy your Client ID
+
+**📋 Detailed setup guide: [GOOGLE_OAUTH_SETUP.md](GOOGLE_OAUTH_SETUP.md)**
+
 ### For Development
 Edit `js/config.js` and add your credentials:
 ```javascript
 const CONFIG = {
-  SPOTIFY_CLIENT_ID: 'your_client_id_here',
-  SPOTIFY_CLIENT_SECRET: 'your_client_secret_here'
+  SPOTIFY_CLIENT_ID: 'your_spotify_client_id_here',
+  SPOTIFY_CLIENT_SECRET: 'your_spotify_client_secret_here',
+  GOOGLE_CLIENT_ID: 'your_google_client_id_here.apps.googleusercontent.com'
 };
 ```
 
