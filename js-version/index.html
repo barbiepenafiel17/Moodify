@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodify - Mood-based Spotify Playlists</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-neutral-50 text-neutral-900">
+    <!-- Navigation -->
+    <nav class="border-b border-neutral-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <h1 class="text-xl font-semibold">Moodify</h1>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-4xl font-bold text-center mb-4">Pick a mood</h2>
+        <p class="text-center text-neutral-600 mb-8">We'll fetch playlists that match your vibe.</p>
+
+        <!-- Mood Selector -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-12">
+            <button class="mood-btn" data-mood="happy">Happy</button>
+            <button class="mood-btn" data-mood="chill">Chill</button>
+            <button class="mood-btn" data-mood="sad">Sad</button>
+            <button class="mood-btn" data-mood="focus">Focus</button>
+            <button class="mood-btn" data-mood="energetic">Energetic</button>
+            <button class="mood-btn" data-mood="romantic">Romantic</button>
+            <button class="mood-btn" data-mood="party">Party</button>
+            <button class="mood-btn" data-mood="sleep">Sleep</button>
+        </div>
+
+        <!-- Error Alert -->
+        <div id="error-alert" class="hidden bg-red-50 border border-red-200 text-red-800 rounded-xl p-4 mb-8">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm" id="error-message"></p>
+                </div>
+                <div class="ml-auto pl-3">
+                    <button type="button" class="close-error">
+                        <span class="sr-only">Dismiss</span>
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Skeleton -->
+        <div id="loading-skeleton" class="hidden">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="animate-pulse">
+                    <div class="bg-neutral-200 rounded-2xl h-48 mb-4"></div>
+                    <div class="bg-neutral-200 h-4 w-3/4 mb-2"></div>
+                    <div class="bg-neutral-200 h-4 w-1/2"></div>
+                </div>
+                <div class="animate-pulse">
+                    <div class="bg-neutral-200 rounded-2xl h-48 mb-4"></div>
+                    <div class="bg-neutral-200 h-4 w-3/4 mb-2"></div>
+                    <div class="bg-neutral-200 h-4 w-1/2"></div>
+                </div>
+                <div class="animate-pulse">
+                    <div class="bg-neutral-200 rounded-2xl h-48 mb-4"></div>
+                    <div class="bg-neutral-200 h-4 w-3/4 mb-2"></div>
+                    <div class="bg-neutral-200 h-4 w-1/2"></div>
+                </div>
+                <div class="animate-pulse">
+                    <div class="bg-neutral-200 rounded-2xl h-48 mb-4"></div>
+                    <div class="bg-neutral-200 h-4 w-3/4 mb-2"></div>
+                    <div class="bg-neutral-200 h-4 w-1/2"></div>
+                </div>
+                <div class="animate-pulse sm:hidden lg:block">
+                    <div class="bg-neutral-200 rounded-2xl h-48 mb-4"></div>
+                    <div class="bg-neutral-200 h-4 w-3/4 mb-2"></div>
+                    <div class="bg-neutral-200 h-4 w-1/2"></div>
+                </div>
+                <div class="animate-pulse sm:hidden lg:block">
+                    <div class="bg-neutral-200 rounded-2xl h-48 mb-4"></div>
+                    <div class="bg-neutral-200 h-4 w-3/4 mb-2"></div>
+                    <div class="bg-neutral-200 h-4 w-1/2"></div>
+                </div>
+                <div class="animate-pulse hidden xl:block">
+                    <div class="bg-neutral-200 rounded-2xl h-48 mb-4"></div>
+                    <div class="bg-neutral-200 h-4 w-3/4 mb-2"></div>
+                    <div class="bg-neutral-200 h-4 w-1/2"></div>
+                </div>
+                <div class="animate-pulse hidden xl:block">
+                    <div class="bg-neutral-200 rounded-2xl h-48 mb-4"></div>
+                    <div class="bg-neutral-200 h-4 w-3/4 mb-2"></div>
+                    <div class="bg-neutral-200 h-4 w-1/2"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Grid -->
+        <div id="results-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Playlist cards will be inserted here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-12">
+            <div class="mx-auto h-48 w-48 bg-neutral-100 rounded-full mb-6 flex items-center justify-center">
+                <svg class="h-24 w-24 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium mb-2">No playlists found</h3>
+            <p class="text-neutral-600">Try selecting a different mood</p>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/spotify.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

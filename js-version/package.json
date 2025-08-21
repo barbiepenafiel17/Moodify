@@ -1,0 +1,26 @@
+{
+  "name": "moodify-js",
+  "version": "1.0.0",
+  "description": "Mood-based Spotify playlist discovery app",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 3000",
+    "dev": "python -m http.server 3000",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "echo 'Deploy to your preferred static hosting service'"
+  },
+  "keywords": [
+    "spotify",
+    "music",
+    "playlists",
+    "mood",
+    "javascript",
+    "static-site"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "your-repo-url"
+  }
+}
